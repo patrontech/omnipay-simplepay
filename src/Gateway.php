@@ -7,65 +7,53 @@ use Omnipay\Common\AbstractGateway;
  * SimplePay Gateway
  *
  */
-class Gateway extends AbstractGateway
-{
-    public function getName()
-    {
+class Gateway extends AbstractGateway {
+    public function getName() {
         return 'SimplePay';
     }
 
-    public function getDefaultParameters()
-    {
-        return array();
+    public function getDefaultParameters() {
+        return array(
+            'apiKey' => '',
+            'merchantId' => '',
+            'testMode' => false,
+        );
     }
 
-    public function authorize(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SimplePay\Message\CreditCardRequest', $parameters);
+    public function getApiKey() {
+        return $this->getParameter('apiKey');
     }
 
-    public function purchase(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SimplePay\Message\CreditCardRequest', $parameters);
+    public function setApiKey($value) {
+        return $this->setParameter('apiKey', $value);
     }
 
-    public function completeAuthorize(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SimplePay\Message\TransactionReferenceRequest', $parameters);
+    public function getMerchantId() {
+        return $this->getParameter('merchantId');
     }
 
-    public function capture(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SimplePay\Message\TransactionReferenceRequest', $parameters);
+    public function setMerchantId($value) {
+        return $this->setParameter('merchantId', $value);
     }
 
-    public function completePurchase(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SimplePay\Message\TransactionReferenceRequest', $parameters);
+    public function purchase(array $parameters = array()) {
+        return $this->createRequest('\Omnipay\SimplePay\Message\LiveUpdateRequest', $parameters);
     }
 
-    public function refund(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SimplePay\Message\TransactionReferenceRequest', $parameters);
+    public function complete(array $parameters = array()) {
+        return $this->createRequest('\Omnipay\SimplePay\Message\IPNRequest', $parameters);
     }
 
-    public function void(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SimplePay\Message\TransactionReferenceRequest', $parameters);
+    public function backref(array $parameters = array()) {
+         return $this->createRequest('\Omnipay\SimplePay\Message\BackRefRequest', $parameters);
     }
 
-    public function createCard(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SimplePay\Message\CreditCardRequest', $parameters);
+    public function query(array $parameters = array()) {
+        return $this->createRequest('\Omnipay\SimplePay\Message\IOSRequest', $parameters);
     }
 
-    public function updateCard(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SimplePay\Message\CardReferenceRequest', $parameters);
+    public function refund(array $parameters = array()) {
+        return $this->createRequest('\Omnipay\SimplePay\Message\RefundRequest', $parameters);
     }
 
-    public function deleteCard(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SimplePay\Message\CardReferenceRequest', $parameters);
-    }
 }

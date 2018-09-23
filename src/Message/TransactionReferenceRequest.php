@@ -1,7 +1,6 @@
 <?php
 namespace Omnipay\SimplePay\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\ResponseInterface;
 
 /**
