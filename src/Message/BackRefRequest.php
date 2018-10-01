@@ -17,7 +17,7 @@ class BackRefRequest extends AbstractRequest {
         $hash = hash_hmac('md5', $hash_source, trim($this->getParameter('apiKey')));
         $urlArgs = $this->getParameter('urlArgs');
         $ctrl = isset($urlArgs['ctrl']) ? $urlArgs['ctrl'] : '';
-        if ($hash !== $urlArgs['ctrl']) {
+        if ($hash !== $ctrl) {
             throw new InvalidRequestException('signature mismatch');
         }
     }
