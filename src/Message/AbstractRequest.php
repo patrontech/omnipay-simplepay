@@ -109,7 +109,7 @@ abstract class AbstractRequest  extends \Omnipay\Common\Message\AbstractRequest 
     // }
 
     public function sendPost($data) {
-        $headers = array_merge($this->getHeaders(),['Content-Type' => 'application/x-www-form-urlencoded']);
+        $headers = array_merge($this->getHeaders() ?: [], ['Content-Type' => 'application/x-www-form-urlencoded']);
         $data = http_build_query($data);
         $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(),
             $headers,
