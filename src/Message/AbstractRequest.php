@@ -62,6 +62,14 @@ abstract class AbstractRequest  extends \Omnipay\Common\Message\AbstractRequest 
         return [];
     }
 
+    public function setHeaders($data) {
+       return  $this->setParameter('headers', $data);
+    }
+
+    public function getHeaders() {
+        return $this->getParameter('headers');
+    }
+
     public function getHashString($data,$skip=array('HASH')) {
         $hash_source = '';
         foreach ($data as $key => $item) {
@@ -101,9 +109,10 @@ abstract class AbstractRequest  extends \Omnipay\Common\Message\AbstractRequest 
     // }
 
     public function sendPost($data) {
+        $headers = array_merge($this->getHeaders(),['Content-Type' => 'application/x-www-form-urlencoded']);
         $data = http_build_query($data);
         $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(),
-            ['Content-Type' => 'application/x-www-form-urlencoded'],
+            $headers,
             $data
         );
         $resultstring = $httpResponse->getBody();
