@@ -45,4 +45,11 @@ class IPNResponse extends AbstractResponse {
     public function getTransactionId() {
         return $this->data['REFNOEXT'];
     }
+
+    public function getMessage() {
+        if (!$this->verifyHash()) {
+            return 'signature mismatch';
+        }
+        return $this->data['ORDERSTATUS'];
+    }
 }
