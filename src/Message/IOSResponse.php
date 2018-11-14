@@ -28,9 +28,12 @@ class IOSResponse extends AbstractResponse {
 
     public function isPending() {
         return $this->verifyHash() && (
+            $this->data["ORDER_STATUS"] == "INIT" ||
             $this->data["ORDER_STATUS"] == "PAYMENT_AUTHORIZED" ||
+            $this->data["ORDER_STATUS"] == "CARD_AUTHORIZED" ||
             $this->data["ORDER_STATUS"] == "IN_PROGRESS" ||
-            $this->data["ORDER_STATUS"] == "WAITING_PAYMENT"
+            $this->data["ORDER_STATUS"] == "WAITING_PAYMENT" ||
+            $this->data["ORDER_STATUS"] == "INFRAUD"
         );
     }
 
