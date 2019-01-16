@@ -18,6 +18,7 @@ class IOSResponse extends AbstractResponse {
     }
 
     protected function verifyHash() {
+        if (empty($this->data['HASH'])) return false;
         $hash = $this->getRequest()->getHashString($this->data);
         return $hash === $this->data['HASH'];
     }
