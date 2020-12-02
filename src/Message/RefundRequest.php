@@ -18,7 +18,7 @@ class RefundRequest extends AbstractRequest {
         $data = array(
             'MERCHANT'       => $this->getMerchantId(),
             'ORDER_REF'      => $this->getTransactionReference(),
-            'ORDER_AMOUNT'   => $this->getOrderAmount(),
+            'ORDER_AMOUNT'   => ceil($this->getOrderAmount()), // ceil was recommended by SimplePay support, their API started throwing errors if there were decimals
             'ORDER_CURRENCY' => $this->getCurrency(),
             'IRN_DATE'       => date('Y-m-d H:i:s'),
             'AMOUNT'         => $this->getAmount(),
