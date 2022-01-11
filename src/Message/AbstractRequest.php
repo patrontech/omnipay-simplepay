@@ -76,10 +76,10 @@ abstract class AbstractRequest  extends \Omnipay\Common\Message\AbstractRequest 
             if (!in_array($key, $skip)) {
                 if (is_array($item)) {
                     foreach($item as $i) {
-                        $hash_source .= strlen(''.stripslashes($i)) . $i;
+                        $hash_source .= strlen(''.$i) . $i;
                     }
                 } else {
-                    $hash_source .= strlen(''.stripslashes($item)) . $item;
+                    $hash_source .= strlen(''.$item) . $item;
                 }
             }
         }
