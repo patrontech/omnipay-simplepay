@@ -19,7 +19,22 @@ class IPNResponse extends AbstractResponse {
 
     protected function verifyHash() {
         $hash = $this->getRequest()->getHashString($this->data);
-        return $hash === $this->data['HASH'];
+        $match = $hash === $this->data['HASH'];
+        /**
+         * The docs do not explicitly state this, but it seems like they are decoding html entities
+         * before calculating the hash. This results in signature mismatch when the payload contains
+         * encoded html entities. Only trying this if the original match fails here to keep it backward compatible.
+         */
+        if (!$match && is_array($this->data)) {
+            $modifiedArray = $this->data;
+            array_walk_recursive($modifiedArray, function(&$item) {
+                if (is_string($item)) {
+                    $item = html_entity_decode($item);
+                }
+            });
+            $match = $this->getRequest()->getHashString($modifiedArray) === $this->data['HASH'];
+        }
+        return $match;
     }
 
     public function isSuccessful() {
