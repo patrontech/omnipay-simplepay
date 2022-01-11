@@ -25,7 +25,7 @@ class IPNResponse extends AbstractResponse {
          * before calculating the hash. This results in signature mismatch when the payload contains
          * encoded html entities. Only trying this if the original match fails here to keep it backward compatible.
          */
-        if (!$match && is_array($data)) {
+        if (!$match && is_array($this->data)) {
             $modifiedArray = $this->data;
             array_walk_recursive($modifiedArray, function(&$item) {
                 if (is_string($item)) {
