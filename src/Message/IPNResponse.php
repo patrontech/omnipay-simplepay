@@ -22,10 +22,10 @@ class IPNResponse extends AbstractResponse {
         $match = $hash === $this->data['HASH'];
         /**
          * The docs do not explicitly state this, but it seems like they are decoding html entities
-         * before calculating the hash.  Only trying this if the original match fails here to keep
-         * it backward compatible.
+         * before calculating the hash. This results in signature mismatch when the payload contains
+         * encoded html entities. Only trying this if the original match fails here to keep it backward compatible.
          */
-        if (!$match) {
+        if (!$match && is_array($data)) {
             $modifiedArray = $this->data;
             array_walk_recursive($modifiedArray, function(&$item) {
                 if (is_string($item)) {
