@@ -16,7 +16,7 @@
         "psr-4": { "Omnipay\\SimplePay\\" : "src/" }
     },
     "require": {
-        "omnipay/common": "~3.0"
+        "omnipay/common": "~3.2"
     },
     "require-dev": {
         "omnipay/tests": "~3.0",
